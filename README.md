@@ -1,4 +1,4 @@
-# TMDB CLI FOR DATAIKU 
+# TMDB CLI FOR DATAIKU [![](https://img.shields.io/badge/python-%3E%3D3.7-green)]
 
 
 # tmdbcli
