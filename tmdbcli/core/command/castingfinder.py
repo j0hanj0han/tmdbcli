@@ -1,63 +1,63 @@
-import tmdbsimple as tmdb
-import requests
-import os
+"""
+This file represents the CastingFinderCommand class used for the TMDB Cli with the withcast.
+The aim of this class is to find films where two or more actors played together.
+"""
 
-def connect_to_api():
-    try:
-        tmdb.API_KEY = 
-        tmdb.REQUESTS_SESSION = requests.Session()
-    except Exception as e:
-        print(e)
+from typing import List
+from tmdbcli.core.command.command import TmdbCliCommand
 
 
-class CastingFinderCommand():
+class CastingFinderCommand(TmdbCliCommand):
 
-    '''This Class take 2 actors in parameters
-       It returns a list of movies where two actors played together
-    '''
+    """This class take a list of actors in parameters.
+    The list must contain at least 2 actors.
+    It returns a list of movies where the actors played together.
+    """
 
-    def __init__(self, actor1, actor2) -> None:
-        self.connect_to_db = connect_to_api()
-        self.actors = [actor1, actor2]
-        
-    def is_people_actor():
-        return true
+    def __init__(self, args: str):
+        """Instantiate the CastingFinderCommand
+        Instantiate the Parent Class TmdbCliCommand with the args passed and get a TMDB api session
+        """
+        self.args = args
+        super().__init__(self.args)
+        self.actors_list = self.args
+        self.actors = self.actors_list.split(",")
+        self.actor_ids = self._find_actor_ids(self.actors)
 
-    def _find_people_id(self):
-        '''
-        This functions aims to retrieve TMDB people'id passed in parameters during the initialization of the CastingFinderCommand
-        return people id from tmdb in a dictionnary
-        '''
-        self.people_ids = {}
-        for actor in self.actors:
-            print(f"Trying to find people {actor} in TMDB")
-            search = tmdb.Search()
-            # attach the real name
-            actor_id = search.person(query=f"{actor}")["results"][0]["id"]
-            # take the first
-            print(f"Found id for {actor}: {actor_id}")
-            self.people_ids[f"{actor}"] = actor_id
-        print(self.people_ids)
-        return self.people_ids
+    def _find_actor_ids(self, actors_list):
+        """
+        This functions aims to retrieve TMDB actor'id passed in parameters during the initialization of the CastingFinderCommand
+        return actor id from tmdb in a list.
+        """
+        actor_ids = []
+        search = super().tmdb_search()
 
-
-    def _sanitize_people(self):
-        '''
-        This functions aims to sanitize the name we put on it lower case or not
-        '''
-        pass
+        for actor in actors_list:
+            print(f"Trying to find actor '{actor}' in TMDB...")
+            try:
+                # take the first
+                actor_id = search.person(query=f"{actor}")["results"][0]["id"]
+                actor_name = search.person(query=f"{actor}")["results"][0]["name"]
+                print(f"Found id for {actor_name}: {actor_id}")
+                actor_ids.append(actor_id)
+            except:
+                raise Exception(f"Could not find {actor}")
+        return actor_ids
 
     def compute(self):
-        
-        ids_formatted_for_query = ",".join(str(id) for id in list(self.people_ids.values()))
-        actor_formatted_for_results = ','.join(actor for actor in list(self.people_ids.keys()))
-        query = tmdb.Discover().movie(with_cast=ids_formatted_for_query)
-        print(f"Found {query['total_results'] } films, with {actor_formatted_for_results}")
+        """Returns a list of movies names where actors id are present"""
+
+        query = super().tmdb_discover().movie(
+            with_cast=f"{','.join(str(id) for id in self.actor_ids)}"
+        )
+
+        print(f"Found {query['total_results'] } films, with {self.actors_list}")
         for r in query["results"]:
             print(r["original_title"])
+        return query["results"]
 
 
-def helloworld():
-    casting_finder_command = CastingFinderCommand('brad pitt', 'angelina jolie')
-    casting_finder_command._find_people_id()
+def main(actors_list):
+    """Main processor"""
+    casting_finder_command = CastingFinderCommand(actors_list)
     casting_finder_command.compute()
