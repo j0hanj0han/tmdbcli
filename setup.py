@@ -27,7 +27,7 @@ REQUIRED = [
 
 # Test the code :)
 EXTRAS = {
-    'pytest==6.2.5',
+    'test': ['pytest==6.2.5']
 }
 
 here = os.path.abspath(os.path.dirname(__file__))

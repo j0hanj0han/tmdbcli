@@ -24,15 +24,22 @@ pip install .
 As you may probably want add your own cli command, you can install the package in a development mode :
 
 ```
-pip install -e .[extras]
+pip install -e .[test]
 ```
+or if you are in zsh terminal
+```
+pip install -e '.[test]'
+```
+
 ## Quickstart
 
 ```
 export API_KEY
 tmdbcli withcast
 ```
+and then follow the prompt :)
 ## Architecture
 
 The basic architecture of the project aims to be modulable and scalable easily.
 
+![tmdbcli architecture](https://github.com/j0hanj0han/tmdbcli/blob/main/documentation/architecture_tmdb_cli.png?raw=true)
