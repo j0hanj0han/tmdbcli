@@ -22,13 +22,12 @@ VERSION = '0.1.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'tmdbsimple==2.8.0', 'click'
-    # 'requests', 'maya', 'records',
+    'tmdbsimple==2.8.0', 'click==8.0.3'
 ]
 
-# What packages are optional?
+# Test the code :)
 EXTRAS = {
-    # 'fancy feature': ['django'],
+    'pytest==6.2.5',
 }
 
 here = os.path.abspath(os.path.dirname(__file__))

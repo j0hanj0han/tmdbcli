@@ -5,23 +5,36 @@ This is my private repo for Dataiku coding assignment
 
 ## The aim
 
+This project is a first version of a CLI for The Movie Database Project (more infos here: https://www.themoviedb.org)
+Today, there's only one Cli command implemented called "withcast"
+This command retrieves all movies where all actors passed in parameters played togethers.
 
 ## Installation
 
 
-we recommand to install virtualenv 
+We recommand to install a virtual environment in order to have a clean install.
+Clone the repo, and do the following: 
 ```
 pip install virtualenv 
 source venv/bin/activate
 pip install -e . 
-```bash
+```
 
-Export api key
+## Quickstart
+
+```
+export API_KEY
+tmdbcli withcast
+```
+## Architecture
+
+The basic architecture of the project aims to be modulable and scalable easily.
 
 
+### Development Mode
 
+As you may probably want add your endpoint, you can install the package in a development mode :
 
-tmdbcli --actor1 --actor2
-
-
-help
+```
+pip install -e .[extras]
+```
