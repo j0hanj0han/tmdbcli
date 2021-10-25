@@ -22,7 +22,7 @@ class CastingFinderCommand:
         """
         actor_ids = []
         for actor in actors_list:
-            print(f"TMDB API: Trying to find actor '{actor}' ...")
+            print(f"TMDB API: Trying to find actor {actor}.")
             query = f"{actor}"
             results = self.api_client.tmdb_search_person(query=query)["results"]
             # If there's multiple actor names, it returns the first id and name from the results.
