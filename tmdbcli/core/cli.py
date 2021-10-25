@@ -1,26 +1,20 @@
 import click
-from tmdbcli.core.command import castingfinder
+
+from tmdbcli.core.api_client import ApiClient
+from tmdbcli.core.command.castingfinder import CastingFinderCommand
 
 @click.group()
 def main():
     pass
 
 @main.command()
-@click.option("--a", prompt=" Enter the first number", type=int)
-@click.option("--b", prompt=" Enter the second number", type=int)
-def add(a, b):
-    value = a + b
-    click.echo(" The added value {}".format(value))
-
-
-@main.command()
-@click.option(
-    "--withcast", prompt="Enter list of actors, separated by commas", type=str
-)
-def withcast(withcast):
-    """Find common films of actors put in parameters"""
-    click.echo(f"List of actors: {withcast}")
-    castingfinder.main(withcast)
+@click.option("--actors", type=str, help='List of actors: string with quotes and separated by commas', required=True)
+def castingfinder(actors):
+    """Find common films of actors put in options"""
+    api_client = ApiClient()
+    casting_finder_command = CastingFinderCommand(actors, api_client)
+    result = casting_finder_command.compute()
+    click.secho(result)
 
 
 if __name__ == "__main__":

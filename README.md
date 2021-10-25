@@ -6,7 +6,7 @@ This is my private repo for Dataiku coding assignment
 ## The aim
 
 This project is a first version of a CLI for The Movie Database Project (more infos here: https://www.themoviedb.org).
-Today, there's only one Cli command implemented called "withcast"
+Today, there's only one Cli command implemented called "castingfinder"
 This command retrieves all movies where all actors passed in parameters played togethers.
 
 ## Installation
@@ -32,12 +32,13 @@ pip install -e '.[test]'
 ```
 
 ## Quickstart
+You have to specify the option '--actors' and give a list of actors (string) separated by commas.
 
 ```
 export API_KEY
-tmdbcli withcast
+tmdbcli castingfinder --actors 'actor1 , actor2'
 ```
-and then follow the prompt :)
+
 ## Architecture
 
 The basic architecture of the project aims to be modulable and scalable easily.

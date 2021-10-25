@@ -1,63 +1,44 @@
 """
-This file represents the CastingFinderCommand class used for the TMDB Cli with the withcast.
+This file represents the CastingFinderCommand class used for the TMDB Cli with the castingfinder command.
 The aim of this class is to find films where two or more actors played together.
 """
-
 from typing import List
-from tmdbcli.core.command.command import TmdbCliCommand
+
+class CastingFinderCommand():
 
 
-class CastingFinderCommand(TmdbCliCommand):
-
-    """This class take a list of actors in parameters.
-    The list must contain at least 2 actors.
-    It returns a list of movies where the actors played together.
-    """
-
-    def __init__(self, args: str):
-        """Instantiate the CastingFinderCommand
-        Instantiate the Parent Class TmdbCliCommand with the args passed and get a TMDB api session
+    def __init__(self, actors_list, api_client):
         """
-        self.args = args
-        super().__init__(self.args)
-        self.actors_list = self.args
-        self.actors = self.actors_list.split(",")
-        self.actor_ids = self._find_actor_ids(self.actors)
+        This class aims to retrieve movies where actors passed in parameters played together
+        Parameters: a string of actors list separated by commas and the api client for TMDB API. 
+        """
+        self.api_client = api_client
+        self.actors = actors_list.split(",")
 
     def _find_actor_ids(self, actors_list):
         """
-        This functions aims to retrieve TMDB actor'id passed in parameters during the initialization of the CastingFinderCommand
-        return actor id from tmdb in a list.
+        This function aims to retrieve actors ids from a names list.
+        Parameters: actors list. 
+        Return a list of actor ids.
         """
         actor_ids = []
-        search = super().tmdb_search()
-
         for actor in actors_list:
-            print(f"Trying to find actor '{actor}' in TMDB...")
-            try:
-                # take the first
-                actor_id = search.person(query=f"{actor}")["results"][0]["id"]
-                actor_name = search.person(query=f"{actor}")["results"][0]["name"]
-                print(f"Found id for {actor_name}: {actor_id}")
+            print(f"TMDB API: Trying to find actor '{actor}' ...")
+            query=f"{actor}"
+            results = self.api_client.tmdb_search_person(query=query)["results"]
+            # If there's multiple actor names, it returns the first id and name from the results.
+            # It could be improved for a future version of the CLI.
+            if len(results) != 0:
+                actor_id=results[0]["id"]
+                actor_name=results[0]["name"]
+                print(f"TMDB API: Found id for {actor_name}: {actor_id}")
                 actor_ids.append(actor_id)
-            except:
-                raise Exception(f"Could not find {actor}")
+            else:
+                print(f"TMDB API: Could not find {actor}")
         return actor_ids
 
     def compute(self):
         """Returns a list of movies names where actors id are present"""
-
-        query = super().tmdb_discover().movie(
-            with_cast=f"{','.join(str(id) for id in self.actor_ids)}"
-        )
-
-        print(f"Found {query['total_results'] } films, with {self.actors_list}")
-        for r in query["results"]:
-            print(r["original_title"])
-        return query["results"]
-
-
-def main(actors_list):
-    """Main processor"""
-    casting_finder_command = CastingFinderCommand(actors_list)
-    casting_finder_command.compute()
+        query = f"{','.join(str(id) for id in self._find_actor_ids(self.actors))}"
+        result = self.api_client.tmdb_discover_movie_with_cast(query)
+        return result
