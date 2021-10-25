@@ -4,13 +4,12 @@ The aim of this class is to find films where two or more actors played together.
 """
 from typing import List
 
-class CastingFinderCommand():
 
-
+class CastingFinderCommand:
     def __init__(self, actors_list, api_client):
         """
         This class aims to retrieve movies where actors passed in parameters played together
-        Parameters: a string of actors list separated by commas and the api client for TMDB API. 
+        Parameters: a string of actors list separated by commas and the api client for TMDB API.
         """
         self.api_client = api_client
         self.actors = actors_list.split(",")
@@ -18,19 +17,19 @@ class CastingFinderCommand():
     def _find_actor_ids(self, actors_list):
         """
         This function aims to retrieve actors ids from a names list.
-        Parameters: actors list. 
+        Parameters: actors list.
         Return a list of actor ids.
         """
         actor_ids = []
         for actor in actors_list:
             print(f"TMDB API: Trying to find actor '{actor}' ...")
-            query=f"{actor}"
+            query = f"{actor}"
             results = self.api_client.tmdb_search_person(query=query)["results"]
             # If there's multiple actor names, it returns the first id and name from the results.
             # It could be improved for a future version of the CLI.
             if len(results) != 0:
-                actor_id=results[0]["id"]
-                actor_name=results[0]["name"]
+                actor_id = results[0]["id"]
+                actor_name = results[0]["name"]
                 print(f"TMDB API: Found id for {actor_name}: {actor_id}")
                 actor_ids.append(actor_id)
             else:

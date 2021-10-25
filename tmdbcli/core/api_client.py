@@ -1,25 +1,27 @@
-
 import requests
 import os
 import tmdbsimple as tmdb
 
-from tmdbcli.utils.errors import TmdbSessionException, DiscoverException, SearchException
+from tmdbcli.utils.errors import (
+    TmdbSessionException,
+    DiscoverException,
+    SearchException,
+)
+
 
 class ApiClient:
-    """This class aims is the client for the API TMDB
-    """
+    """This class aims is the client for the API TMDB"""
 
     def __init__(self) -> None:
         self.tmdb_session = self._get_tmdb_session()
 
     def _get_tmdb_session(self):
         try:
-            tmdb.API_KEY = os.environ['API_KEY']
+            tmdb.API_KEY = os.environ["API_KEY"]
             tmdb.REQUESTS_SESSION = requests.Session()
             return tmdb
         except:
             raise TmdbSessionException()
-
 
     def tmdb_search_person(self, query):
         try:
@@ -34,5 +36,3 @@ class ApiClient:
             return discover
         except:
             raise DiscoverException()
-    
-

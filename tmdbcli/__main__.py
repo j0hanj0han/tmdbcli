@@ -10,8 +10,9 @@ def main(args=None):
 
     if "API_KEY" in os.environ:
         build_cli()
-    else: 
+    else:
         raise ApiKeyNotFound()
+
 
 if __name__ == "__main__":
     sys.exit(main())
