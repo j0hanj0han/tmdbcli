@@ -10,7 +10,7 @@ from tmdbcli.utils.errors import (
 
 
 class ApiClient:
-    """This class aims is the client for the API TMDB"""
+    """This class is the client for the API TMDB"""
 
     def __init__(self):
         self.tmdb_session = self._get_tmdb_session()

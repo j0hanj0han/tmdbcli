@@ -39,3 +39,12 @@ class SearchException(Exception):
     ):
         self.message = message
         super().__init__(self.message)
+
+class ActorIdException(Exception):
+    """Custom Message for failing in getting list of actors id"""
+
+    def __init__(
+        self, message="TMDB API Error: Could not find a list with at least two verified actors in the database. Program will abort."
+    ):
+        self.message = message
+        super().__init__(self.message)
