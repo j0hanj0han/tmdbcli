@@ -1,20 +1,20 @@
-
-from click.testing import CliRunner
 import pytest
-
+from click.testing import CliRunner
 
 from tmdbcli.core.cli import castingfinder
 
 
-import unittest
-from unittest.mock import patch
-
-
-def test_castingfinder():
-  options_parameters='Unknown_actor1, Unknown_actor2'
+@pytest.mark.parametrize("option_put, result_exit_code_expected", [(['--actors', 'gérard depardieu, christian clavier' ], 0), ([], 2)])
+def test_castingfinder(option_put, result_exit_code_expected):
   # Given
   runner = CliRunner()
-  result = runner.invoke(castingfinder, ['--actors', options_parameters ])
+  #when
+  result = runner.invoke(castingfinder, option_put)
   # Then
-  assert result.exit_code == 0
-  assert result.output == 'Hello Peter!\n'
+  assert result.exit_code == result_exit_code_expected
+  assert type(result.output) == str
+
+  if result.exit_code == 2:
+    assert "Missing" in result.output
+  elif result.exit_code == 0:
+    assert "Astérix" in result.output

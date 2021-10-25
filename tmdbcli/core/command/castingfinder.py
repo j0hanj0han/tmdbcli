@@ -37,8 +37,9 @@ class CastingFinderCommand():
                 print(f"TMDB API: Could not find {actor}")
         return actor_ids
 
-    def compute(self):
+    def find_movies(self):
         """Returns a list of movies names where actors id are present"""
         query = f"{','.join(str(id) for id in self._find_actor_ids(self.actors))}"
-        result = self.api_client.tmdb_discover_movie_with_cast(query)
-        return result
+        raw_result = self.api_client.tmdb_discover_movie_with_cast(query)["results"]
+        movies = [movie["original_title"] for movie in raw_result]
+        return movies

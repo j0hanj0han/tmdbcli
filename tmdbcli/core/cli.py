@@ -13,7 +13,7 @@ def castingfinder(actors):
     """Find common films of actors put in options"""
     api_client = ApiClient()
     casting_finder_command = CastingFinderCommand(actors, api_client)
-    result = casting_finder_command.compute()
+    result = casting_finder_command.find_movies()
     click.secho(result)
 
 

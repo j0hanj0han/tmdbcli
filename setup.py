@@ -24,7 +24,7 @@ REQUIRED = [
 
 # Test the code :)
 EXTRAS = {
-    'test': ['pytest==6.2.5']
+    'test': ['pytest==6.2.5', "pytest-cov==3.0.0"]
 }
 
 here = os.path.abspath(os.path.dirname(__file__))
