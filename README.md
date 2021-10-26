@@ -17,7 +17,7 @@ Clone the repo, and do the following:
 cd tmdbcli
 python3 -m venv venv
 source venv/bin/activate
-pip install . 
+pip install -e . 
 ```
 ### Development Mode
 
