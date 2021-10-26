@@ -17,11 +17,15 @@ def main():
     required=True,
 )
 def castingfinder(actors):
-    """Find common films of actors put in options"""
+    """
+    Find common movies with actors put in option.
+    Parameters: a list of actors.
+    Returns a list of movies
+    """
     api_client = ApiClient()
     casting_finder_command = CastingFinderCommand(actors, api_client)
     result = casting_finder_command.find_movies()
-    click.secho(result)
+    click.echo(result)
 
 
 if __name__ == "__main__":

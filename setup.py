@@ -4,7 +4,6 @@
 import io
 import os
 import sys
-from shutil import rmtree
 
 from setuptools import find_packages, setup, Command
 
@@ -24,7 +23,7 @@ REQUIRED = [
 
 # Test the code :)
 EXTRAS = {
-    'test': ['pytest==6.2.5', "pytest-cov==3.0.0"]
+    'test': ['pytest==6.2.5', "pytest-cov==3.0.0", "flake8==4.0.1"]
 }
 
 here = os.path.abspath(os.path.dirname(__file__))

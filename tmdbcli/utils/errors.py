@@ -14,7 +14,7 @@ class ApiKeyNotFound(Exception):
 
 
 class TmdbSessionException(Exception):
-    """Custom Message for Missing Api Key"""
+    """Custom Message for Missing TMDB Session"""
 
     def __init__(self, message="TMDB API Error: Could not set a TMDB."):
         self.message = message
@@ -40,11 +40,13 @@ class SearchException(Exception):
         self.message = message
         super().__init__(self.message)
 
+
 class ActorIdException(Exception):
     """Custom Message for failing in getting list of actors id"""
 
     def __init__(
-        self, message="TMDB API Error: Could not find a list with at least two verified actors in the database. Program will abort."
+        self,
+        message="TMDB CLI Error: Could not find a list of actors with at least two ids in the database. Program will abort.",
     ):
         self.message = message
         super().__init__(self.message)
