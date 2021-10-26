@@ -6,7 +6,7 @@ from tmdbcli.utils.errors import ApiKeyNotFound
 
 
 def main():
-    """The main routine."""
+    """The main routine of TMDB Cli."""
 
     if "API_KEY" in os.environ:
         build_cli()

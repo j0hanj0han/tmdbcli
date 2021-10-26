@@ -1,4 +1,7 @@
-""" 
+"""
+This test aims to check the whole working flow of the application. It makes a real call to the API and retrieve real data.
+It's a beta version.
+In a near future we need to add unit test with mocking component for each function when it's necessary (like api call) in a order to test properly.
 """
 from tmdbcli.core.api_client import ApiClient
 from tmdbcli.core.command.castingfinder import CastingFinderCommand

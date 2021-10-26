@@ -1,3 +1,7 @@
+"""
+This file just test the castingfinder command and check if the CLI works properly.
+"""
+
 import pytest
 from click.testing import CliRunner
 
@@ -11,7 +15,7 @@ from tmdbcli.core.cli import castingfinder
 def test_castingfinder(option_put, result_exit_code_expected):
     # Given
     runner = CliRunner()
-    # when
+    # When
     result = runner.invoke(castingfinder, option_put)
     # Then
     assert result.exit_code == result_exit_code_expected

@@ -7,7 +7,7 @@ from tmdbcli.utils.errors import ActorIdException
 class CastingFinderCommand:
     def __init__(self, actors_list, api_client):
         """
-        This class aims to retrieve movies where actors passed in parameters played together
+        This class aims to retrieve movies where actors passed in parameters played together.
         Parameters: a string of actors list separated by commas and the api client for TMDB API.
         """
         self.api_client = api_client
